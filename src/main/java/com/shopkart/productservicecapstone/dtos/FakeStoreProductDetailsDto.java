@@ -22,10 +22,10 @@ public class FakeStoreProductDetailsDto {
         product.setDescription(description);
         product.setPrice(price);
         product.setImageUrl(image);
-        Category category = new Category();
-        category.setId(123L);
-        category.setName("Mobile");
-        product.setCategory(category);
+        Category cate = new Category();
+        cate.setId(123L);
+        cate.setName(category);
+        product.setCategory(cate);
         return product;
     }
 }
