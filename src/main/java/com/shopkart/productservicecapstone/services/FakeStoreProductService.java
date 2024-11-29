@@ -2,8 +2,12 @@ package com.shopkart.productservicecapstone.services;
 
 import com.shopkart.productservicecapstone.dtos.FakeStoreProductDetailsDto;
 import com.shopkart.productservicecapstone.models.Product;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class FakeStoreProductService implements ProductService {
@@ -29,5 +33,13 @@ public class FakeStoreProductService implements ProductService {
     public Product getProduct(Long productId) {
         FakeStoreProductDetailsDto fakeStoreDto=restTemplate.getForObject("https://fakestoreapi.com/products/" + productId, FakeStoreProductDetailsDto.class);
         return fakeStoreDto.toProduct();
+    }
+
+    @Override
+    public List<Product> getAllProducts() {
+        ResponseEntity<FakeStoreProductDetailsDto[]> responseEntity=restTemplate.getForEntity("https://fakestoreapi.com/products",FakeStoreProductDetailsDto[].class);
+        FakeStoreProductDetailsDto[] fakeStoreProductDetailsDtosArr=responseEntity.getBody();
+        List<Product>  list=Arrays.asList(fakeStoreProductDetailsDtosArr).stream().map(fakeStoreDto->fakeStoreDto.toProduct()).toList();
+        return list;
     }
 }

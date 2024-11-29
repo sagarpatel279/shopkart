@@ -6,6 +6,9 @@ import com.shopkart.productservicecapstone.models.Product;
 import com.shopkart.productservicecapstone.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 //Get all products
 //Get all categories
 //Update a product
@@ -27,6 +30,11 @@ public class ProductController {
     @GetMapping("/products/{id}")
     public Product getProduct(@PathVariable("id") long productId){
         return productService.getProduct(productId);
+    }
+
+    @GetMapping("/products")
+    public List<Product> getAllProducts(){
+        return productService.getAllProducts();
     }
 
 }
