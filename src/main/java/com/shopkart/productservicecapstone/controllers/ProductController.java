@@ -19,11 +19,11 @@ import java.util.List;
 @RestController
 public class ProductController {
     private ProductService productService;
-//    private CategoryService categoryService;
+    private CategoryService categoryService;
     @Autowired
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService,CategoryService categoryService) {
         this.productService = productService;
-//        this.categoryService = categoryService;
+        this.categoryService = categoryService;
     }
     @PostMapping("/products")
     public Product createProduct(@RequestBody CreateFakeStoreProductRequestDto requestDto){
@@ -40,8 +40,12 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
-//    @GetMapping("/products/categories")
-//    public List<Category> getAllCategories(){
-//        return categoryService.findAll();
-//    }
+    @GetMapping("/products/categories")
+    public List<Category> getAllCategories(){
+        return categoryService.findAll();
+    }
+    @GetMapping("/products/products/categories/{name}")
+    public List<Product> getProductsByCategory(@PathVariable("name") String categoryName){
+        return productService.getProductsByCategory(categoryName);
+    }
 }
