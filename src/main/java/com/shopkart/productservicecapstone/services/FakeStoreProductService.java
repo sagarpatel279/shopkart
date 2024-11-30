@@ -42,4 +42,11 @@ public class FakeStoreProductService implements ProductService {
         List<Product>  list=Arrays.asList(fakeStoreProductDetailsDtosArr).stream().map(fakeStoreDto->fakeStoreDto.toProduct()).toList();
         return list;
     }
+
+    @Override
+    public List<Product> getProductsByCategory(String category) {
+        FakeStoreProductDetailsDto[] fakeProductsArr= restTemplate.getForEntity("https://fakestoreapi.com/products/category/"+category,FakeStoreProductDetailsDto[].class).getBody();
+        List<Product> products=Arrays.asList(fakeProductsArr).stream().map(fakeProduct->fakeProduct.toProduct()).toList();
+        return products;
+    }
 }
