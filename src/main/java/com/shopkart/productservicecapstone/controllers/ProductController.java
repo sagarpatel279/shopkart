@@ -2,7 +2,9 @@ package com.shopkart.productservicecapstone.controllers;
 
 
 import com.shopkart.productservicecapstone.dtos.CreateFakeStoreProductRequestDto;
+import com.shopkart.productservicecapstone.models.Category;
 import com.shopkart.productservicecapstone.models.Product;
+import com.shopkart.productservicecapstone.services.CategoryService;
 import com.shopkart.productservicecapstone.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,10 +19,11 @@ import java.util.List;
 @RestController
 public class ProductController {
     private ProductService productService;
-
+//    private CategoryService categoryService;
     @Autowired
     public ProductController(ProductService productService) {
         this.productService = productService;
+//        this.categoryService = categoryService;
     }
     @PostMapping("/products")
     public Product createProduct(@RequestBody CreateFakeStoreProductRequestDto requestDto){
@@ -37,4 +40,8 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
+//    @GetMapping("/products/categories")
+//    public List<Category> getAllCategories(){
+//        return categoryService.findAll();
+//    }
 }
