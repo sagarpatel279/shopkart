@@ -1,6 +1,7 @@
 package com.shopkart.productservicecapstone.services;
 
 import com.shopkart.productservicecapstone.dtos.FakeStoreProductDetailsDto;
+import com.shopkart.productservicecapstone.exceptions.ProductNotFoundException;
 import com.shopkart.productservicecapstone.models.Product;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -30,8 +31,11 @@ public class FakeStoreProductService implements ProductService {
     }
 
     @Override
-    public Product getProduct(Long productId) {
+    public Product getProduct(Long productId) throws ProductNotFoundException {
         FakeStoreProductDetailsDto fakeStoreDto=restTemplate.getForObject("https://fakestoreapi.com/products/" + productId, FakeStoreProductDetailsDto.class);
+        if(fakeStoreDto==null){
+            throw new ProductNotFoundException("Product with id: "+productId+" is not found");
+        }
         return fakeStoreDto.toProduct();
     }
 

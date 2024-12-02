@@ -2,6 +2,7 @@ package com.shopkart.productservicecapstone.controllers;
 
 
 import com.shopkart.productservicecapstone.dtos.CreateFakeStoreProductRequestDto;
+import com.shopkart.productservicecapstone.exceptions.ProductNotFoundException;
 import com.shopkart.productservicecapstone.models.Category;
 import com.shopkart.productservicecapstone.models.Product;
 import com.shopkart.productservicecapstone.services.CategoryService;
@@ -31,7 +32,7 @@ public class ProductController {
     }
 
     @GetMapping("/products/{id}")
-    public Product getProduct(@PathVariable("id") long productId){
+    public Product getProduct(@PathVariable("id") long productId) throws ProductNotFoundException {
         return productService.getProduct(productId);
     }
 
