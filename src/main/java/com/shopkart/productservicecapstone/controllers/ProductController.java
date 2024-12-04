@@ -53,8 +53,22 @@ public class ProductController {
     }
 
     @PutMapping("/products/{id}")
-    public Product updateProduct(@PathVariable Long productId,@RequestBody UpdateProductRequestDto requestDto) throws ProductNotFoundException {
+    public Product updateWholeProduct(@PathVariable("id") Long productId,@RequestBody UpdateProductRequestDto requestDto) throws ProductNotFoundException {
+        return productService.updateWholeProductById(productId,requestDto.getTitle(),requestDto.getPrice(),requestDto.getDescription(),requestDto.getImage(),requestDto.getCategory());
+    }
+
+    @PatchMapping("/products/{id}")
+    public Product updateProduct(@PathVariable("id") Long productId,@RequestBody UpdateProductRequestDto requestDto) throws ProductNotFoundException {
         return productService.updateProductById(productId,requestDto.getTitle(),requestDto.getPrice(),requestDto.getDescription(),requestDto.getImage(),requestDto.getCategory());
     }
 
+    @DeleteMapping("/products/{id}")
+    public void deleteProduct(@PathVariable("id")Long productId) throws ProductNotFoundException {
+        productService.deleteProductById(productId);
+    }
+
+//    @DeleteMapping("/products/{id}")
+//    public int removeProduct(@PathVariable("id") Long productId) throws ProductNotFoundException {
+//        return productService.removeProductById(productId);
+//    }
 }

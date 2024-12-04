@@ -54,7 +54,22 @@ public class FakeStoreProductService implements ProductService {
     }
 
     @Override
+    public Product updateWholeProductById(Long productId, String title, double price, String description, String image, String category) throws ProductNotFoundException {
+        return null;
+    }
+
+    @Override
     public Product updateProductById(Long productId, String title, double price, String description, String image, String category) {
         return null;
+    }
+
+    @Override
+    public void deleteProductById(Long productId) throws ProductNotFoundException {
+
+    }
+
+    @Override
+    public int removeProductById(Long productId) throws ProductNotFoundException {
+        return 0;
     }
 }

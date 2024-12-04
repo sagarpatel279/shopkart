@@ -54,7 +54,7 @@ public class SelfDbProductService implements  ProductService{
     }
 
     @Override
-    public Product updateProductById(Long productId, String title, double price, String description, String image, String category) throws ProductNotFoundException {
+    public Product updateWholeProductById(Long productId, String title, double price, String description, String image, String category) throws ProductNotFoundException {
         boolean isProductExist=productRepository.existsById(productId);
         if(!isProductExist){
             throw new ProductNotFoundException("Product is not found");
@@ -68,5 +68,42 @@ public class SelfDbProductService implements  ProductService{
         product.setCategory(category!=null?categoryRepository.findByName(category).get():null);
         productRepository.save(product);
         return product;
+    }
+
+    @Override
+    public Product updateProductById(Long productId, String title, double price, String description, String image, String category) throws ProductNotFoundException {
+        Optional<Product> productOptional=productRepository.findById(productId);
+        if(productOptional.isEmpty())
+                throw new ProductNotFoundException("Product is not found by id:"+productId);
+        Product product=productOptional.get();
+        product.setOrDefaultTitle(title);
+        product.setOrDefaultPrice(price);
+        product.setOrDefaultDescription(description);
+        product.setOrDefaultImageUrl(image);
+        product.setOrDefaultCategory(category!=null?categoryRepository.findByName(category).get():null);
+        productRepository.save(product);
+        return product;
+    }
+
+    @Override
+    public void deleteProductById(Long productId) throws ProductNotFoundException {
+        Optional<Product> productOptional=productRepository.findById(productId);
+        if(productOptional.isEmpty()){
+            throw new ProductNotFoundException("Product is not found by id:"+productId);
+        }
+        Product product=productOptional.get();
+        product.setDeleted(true);
+        productRepository.save(product);
+    }
+
+    @Override
+    public int removeProductById(Long productId) throws ProductNotFoundException {
+        Optional<Product> productOptional=productRepository.findById(productId);
+        if(productOptional.isEmpty()){
+            throw new ProductNotFoundException("Product is not found by ID:"+productId);
+        }
+        Product product=productOptional.get();
+        product.setDeleted(true);
+        return 0;
     }
 }
