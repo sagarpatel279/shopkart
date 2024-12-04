@@ -10,4 +10,6 @@ public interface ProductService {
     Product getProduct(Long productId) throws ProductNotFoundException;
     List<Product> getAllProducts();
     List<Product> getProductsByCategory(String category);
+
+    Product updateProductById(Long productId, String title, double price, String description, String image, String category) throws ProductNotFoundException;
 }

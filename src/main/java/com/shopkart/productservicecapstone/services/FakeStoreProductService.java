@@ -52,4 +52,9 @@ public class FakeStoreProductService implements ProductService {
         List<Product> products=Arrays.asList(fakeProductsArr).stream().map(fakeProduct->fakeProduct.toProduct()).toList();
         return products;
     }
+
+    @Override
+    public Product updateProductById(Long productId, String title, double price, String description, String image, String category) {
+        return null;
+    }
 }
